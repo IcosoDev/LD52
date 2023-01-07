@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 public class Walk : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class Walk : MonoBehaviour
     void Update()
     {
         stepTimer -= Time.deltaTime;
-        if (stepTimer <= 0)
+        if (stepTimer <= 0 && farmerScript.state == FarmerScript.State.Moving)
         {
             Step();
             stepTimer = timeBetweenSteps;

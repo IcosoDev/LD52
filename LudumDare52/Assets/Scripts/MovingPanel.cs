@@ -25,21 +25,30 @@ public class MovingPanel : MonoBehaviour/*, IPointerDownHandler, IBeginDragHandl
 
     public void Selected()
     {
-        spriteImage.sprite = outlinedSprite;
-        spriteImage.transform.DOScale(1.08f, 0.14f);
+        if(!placerManager.isAPlantSelected)
+        {
+            spriteImage.sprite = outlinedSprite;
+            spriteImage.transform.DOScale(1.08f, 0.14f);
+        }
     }
 
     public void Deselected()
     {
-        spriteImage.sprite = normalSprite;
-        spriteImage.transform.DOScale(1f, 0.14f);
+        if (!placerManager.isAPlantSelected)
+        {
+            spriteImage.sprite = normalSprite;
+            spriteImage.transform.DOScale(1f, 0.14f);
+        }
     }
 
     public void SelectThisCrop()
     {
-        placerManager.isAPlantSelected = true;
-        placerManager.IDOfSelectedPlant = id;
-        Destroy(gameObject);
+        if (!placerManager.isAPlantSelected)
+        {
+            placerManager.isAPlantSelected = true;
+            placerManager.IDOfSelectedPlant = id;
+            Destroy(gameObject);
+        }
     }
 
 

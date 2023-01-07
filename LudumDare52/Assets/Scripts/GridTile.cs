@@ -8,12 +8,16 @@ public class GridTile : MonoBehaviour
     private Image image;
     private PlantPlacerManager placerManager;
     public bool available = true;
-
+    [SerializeField] private SpriteRenderer grassSpriteRenderer;
+    [SerializeField] private Sprite[] grassSprites;
     private void Awake()
     {
         image = GetComponent<Image>();
         placerManager = FindObjectOfType<PlantPlacerManager>();
         image.color = new Color32(255, 255, 255, 0);
+
+        //grassSpriteRenderer.sprite = grassSprites[Random.Range(0, grassSprites.Length)];
+        //grassSpriteRenderer.transform.localEulerAngles = new Vector3(0, 0, Random.Range(0, 360));
     }
 
     public void ShowDisplay()

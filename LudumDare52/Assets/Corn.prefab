@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5894983197354697296}
   - component: {fileID: 5894983197354697297}
+  - component: {fileID: -8247287694084392968}
   m_Layer: 7
   m_Name: Corn
   m_TagString: Untagged
@@ -58,6 +59,32 @@ MonoBehaviour:
   bullet: {fileID: 9104314961932195368, guid: 3d26507f7fa4c2248abe287f1f285a0c, type: 3}
   shootForce: 50
   shootParitcles: {fileID: 5894983198543020927}
+--- !u!61 &-8247287694084392968
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5894983197354697299}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 22ab1015631acec48b429fbbf458ba07, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4}
+  m_EdgeRadius: 0
 --- !u!1 &5894983197617244731
 GameObject:
   m_ObjectHideFlags: 0
