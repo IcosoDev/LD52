@@ -3,11 +3,14 @@ using System.Collections;
 using DG.Tweening;
 public class Plant : MonoBehaviour
 {
-    public float health;
+    [HideInInspector] public float health;
     public float damage;
     public SpriteRenderer plantSprite;
     [SerializeField] private LayerMask farmerLayer;
     [HideInInspector] public GridTile gridTile;
+    [SerializeField] private Sprite normalSprite, hitSprite;
+    [SerializeField] private ParticleSystem hitParticles;
+    [SerializeField] private GameObject deadObject;
 
     public bool canSeeFarmer()
     {
@@ -72,5 +75,33 @@ public class Plant : MonoBehaviour
             plantSprite.transform.localEulerAngles = Vector3.Lerp(newRotation, originalRotation, t);
             yield return null;
         }
+    }
+
+    public IEnumerator TakeDamage(float damage)
+    {
+        health -= damage;
+        if(health <= 0)
+        {
+            StartCoroutine(Death());
+        }
+        hitParticles.Play();
+        plantSprite.sprite = hitSprite;
+        plantSprite.transform.localEulerAngles = new Vector3(0, 0, 24);
+        plantSprite.transform.DORotate(new Vector3(0, 0, 0), 0.18f);
+        yield return new WaitForSeconds(0.2f);
+        plantSprite.sprite = normalSprite;
+    }
+
+    public IEnumerator Death()
+    {
+        GameObject d = Instantiate(deadObject, transform.position, Quaternion.identity);
+        d.GetComponent<Rigidbody2D>().AddForce(new Vector2(-694.20f, 420.69f));
+        d.GetComponent<Rigidbody2D>().AddTorque(500);
+        d.GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
+        transform.position = new Vector3(0, 0, -100);
+
+        yield return new WaitForSeconds(0.25f);
+
+        Destroy(gameObject);
     }
 }

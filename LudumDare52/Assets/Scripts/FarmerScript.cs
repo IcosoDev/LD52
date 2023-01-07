@@ -50,6 +50,7 @@ public class FarmerScript : MonoBehaviour
         GameObject d = Instantiate(deadObject, transform.position, Quaternion.identity);
         d.GetComponent<Rigidbody2D>().AddForce(new Vector2(694.20f, 420.69f));
         d.GetComponent<Rigidbody2D>().AddTorque(-500);
+        d.GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
         transform.position = new Vector3(0, 0, -100);
 
         yield return new WaitForSeconds(0.25f);
@@ -104,26 +105,31 @@ public class FarmerScript : MonoBehaviour
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + new Vector3(-3, 0, 0), Vector2.left * 3);
+        Gizmos.DrawRay(transform.position, Vector2.left * 6);
     }
 
     [Header("Attacking")]
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private float attackDamage;
-    [SerializeField] private LayerMask plantLayer;
+    [SerializeField] private LayerMask plantLayer, farmerLayer;
     private float attackTimer;
 
     private void Update()
     {
         attackTimer -= Time.deltaTime;
-        if (Physics2D.Raycast(transform.position + new Vector3(-3, 0, 0), Vector2.left, 3f, plantLayer))
+        if (Physics2D.Raycast(transform.position, Vector2.left, 6f, plantLayer))
         {
+            Debug.Log("hitting");
             state = State.Attacking;
             if (attackTimer <= 0)
             {
                 attackTimer = timeBetweenAttacks;
                 StartCoroutine(Attack());
             }
+        }
+        else if (Physics2D.Raycast(transform.position, Vector2.left, 10f, farmerLayer))
+        {
+            state = State.Attacking;
         }
         else
         {
@@ -133,8 +139,11 @@ public class FarmerScript : MonoBehaviour
 
     private IEnumerator Attack()
     {
+        farmerSprite.transform.localEulerAngles = new Vector3(0, 0, 15);
+        farmerSprite.transform.DORotate(new Vector3(0, 0, 0), 0.15f);
         yield return new WaitForEndOfFrame();
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(-3, 0, 0), Vector2.left, 3f, plantLayer);
-        hit.collider.gameObject.GetComponent<Plant>().health -= attackDamage;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 6f, plantLayer);
+        Debug.Log(hit.collider);
+        hit.collider.gameObject.GetComponent<PlantHealth>().TakeHit(attackDamage);
     }
 }
