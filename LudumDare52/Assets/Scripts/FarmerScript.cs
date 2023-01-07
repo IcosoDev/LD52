@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class FarmerScript : MonoBehaviour
 {
+    //HALLO YOU WONDERFUL HUMAN BEING I HOPE YOU HAVE A FANTASTICALLY GROOVY DAY!!! -icobo
     public SpriteRenderer farmerSprite;
     public float health;
     [SerializeField] private Sprite normalSprite, hitSprite;
+    [SerializeField] private ParticleSystem hitParticles;
 
     public IEnumerator TakeDamage(float damage)
     {
         health -= damage;
+        hitParticles.Play();
         if (health <= 0)
         {
             //Death

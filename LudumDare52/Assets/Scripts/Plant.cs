@@ -1,11 +1,32 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 public class Plant : MonoBehaviour
 {
     public float health;
-    public bool canSeeFarmer;
     public float damage;
     public SpriteRenderer plantSprite;
+    [SerializeField] private LayerMask farmerLayer;
+    [HideInInspector] public GridTile gridTile;
+
+    public bool canSeeFarmer()
+    {
+        if (Physics2D.Raycast(transform.position, Vector2.right, 100, farmerLayer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void Start()
+    {
+        transform.localScale = Vector3.zero;
+        transform.DOScale(1, 0.26f);
+    }
+
 
     public IEnumerator Squish(float xSquish, float ySquish, float animationTime)
     {

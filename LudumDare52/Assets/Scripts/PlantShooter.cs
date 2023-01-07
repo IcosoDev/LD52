@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class PlantShooter : Plant
 {
     [SerializeField] private float timeBetweenShots;
@@ -11,13 +10,14 @@ public class PlantShooter : Plant
 
     private new void Start()
     {
+        base.Start();
         shootTimer = timeBetweenShots;
     }
 
-    private new void Update()
+    private void Update()
     {
         shootTimer -= Time.deltaTime;
-        if (shootTimer <= 0/* && canSeeFarmer == true*/)
+        if (shootTimer <= 0 && canSeeFarmer() == true)
         {
             Shoot();
             shootTimer = timeBetweenShots;
@@ -30,7 +30,7 @@ public class PlantShooter : Plant
         Rigidbody2D b = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
         b.GetComponent<Bullet>().dmg = damage;
         b.velocity = Vector2.right * shootForce;
-        StartCoroutine(Squish(1.2f, 0.75f, 0.08f));
-        StartCoroutine(Wiggle(2f, 0.14f));
+        StartCoroutine(Squish(1.15f, 0.85f, 0.05f));
+        StartCoroutine(Wiggle(2f, 0.12f));
     }
 }
