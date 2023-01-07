@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Farmer
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Farmers
+  - Plants
   - 
   - 
   - 
@@ -40,4 +41,31 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1952046299
+    locked: 0
+  - name: Particles0
+    uniqueID: 4040153261
+    locked: 0
+  - name: Farmer
+    uniqueID: 3691519233
+    locked: 0
+  - name: Projectiles
+    uniqueID: 1591234731
+    locked: 0
+  - name: Plants
+    uniqueID: 807982351
+    locked: 0
+  - name: Particles1
+    uniqueID: 3870924813
+    locked: 0
+  - name: UI
+    uniqueID: 1624015447
+    locked: 0
+  - name: Cursor
+    uniqueID: 2573627199
+    locked: 0
+  - name: Transition
+    uniqueID: 1303996843
     locked: 0
