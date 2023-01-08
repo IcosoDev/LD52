@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
 public class Walk : MonoBehaviour
 {
@@ -8,6 +7,7 @@ public class Walk : MonoBehaviour
     [SerializeField] private float timeBetweenSteps;
     [SerializeField] private float stepTime;
     private FarmerScript farmerScript;
+    private GameManager gameManager;
     private float stepTimer;
     private Rigidbody2D rb;
     void Start()
@@ -15,6 +15,8 @@ public class Walk : MonoBehaviour
         direction.Normalize();
         rb = GetComponent<Rigidbody2D>();
         farmerScript = GetComponent<FarmerScript>();
+        gameManager = FindObjectOfType<GameManager>();
+        timeBetweenSteps -= gameManager.difficultyLevel / 10;
         stepTimer = timeBetweenSteps;
     }
 

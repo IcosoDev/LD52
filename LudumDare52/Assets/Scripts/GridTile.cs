@@ -10,6 +10,7 @@ public class GridTile : MonoBehaviour
     public bool available = true;
     [SerializeField] private SpriteRenderer grassSpriteRenderer;
     [SerializeField] private Sprite[] grassSprites;
+    [SerializeField] private LayerMask plantLayer;
     private void Awake()
     {
         image = GetComponent<Image>();
@@ -22,14 +23,46 @@ public class GridTile : MonoBehaviour
 
     public void ShowDisplay()
     {
-        if(placerManager.isAPlantSelected == true && available == true)
+        if (IsFree() != true)
         {
-            placerManager.transform.position = transform.position;
-            placerManager.spriteRenderer.sprite = placerManager.plantSprites[placerManager.IDOfSelectedPlant];
-            //image.sprite = spriteToDisplay;
-            //image.DOFade(1, 0.04f);
+            if (placerManager.isAPlantSelected == true && available == true)
+            {
+                placerManager.transform.position = transform.position;
+                placerManager.spriteRenderer.sprite = placerManager.plantSprites[placerManager.IDOfSelectedPlant];
+                //image.sprite = spriteToDisplay;
+                //image.DOFade(1, 0.04f);
+            }
         }
+    }
 
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown("r"))
+    //    {
+    //        Debug.Log(IsFree());
+    //    }
+    //    if(IsFree() == true)
+    //    {
+    //        Debug.Log("true");
+    //    }
+    //}
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(transform.position, 1);
+    //}
+
+    public bool IsFree()
+    {
+        if (Physics2D.OverlapCircle(transform.position, 1, plantLayer))
+        {
+            available = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void RemoveDisplay()
@@ -39,12 +72,15 @@ public class GridTile : MonoBehaviour
 
     public void PlacePlant()
     {
-        if (placerManager.isAPlantSelected == true && available == true)
+        if (IsFree() != true)
         {
-            Instantiate(placerManager.plant[placerManager.IDOfSelectedPlant], transform.position, Quaternion.identity);
-            RemoveDisplay();
-            placerManager.isAPlantSelected = false;
-            available = false;
+            if (placerManager.isAPlantSelected == true && available == true)
+            {
+                Instantiate(placerManager.plant[placerManager.IDOfSelectedPlant], transform.position, Quaternion.identity);
+                RemoveDisplay();
+                placerManager.isAPlantSelected = false;
+                available = false;
+            }
         }
     }
 }

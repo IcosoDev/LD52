@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator SpawnLoop()
     {
-        float a = Mathf.Pow(2, -(0.1f * difficultyLevel) - 1.6f);
-        timeBetweenSpawns = a + 2.5f;
+        float b = 0.75f * difficultyLevel - 1.6f;
+        float a = Mathf.Pow(2, -b);
+        timeBetweenSpawns = a + 1;
         SpawnFarmer();
         yield return new WaitForSeconds(timeBetweenSpawns);
         StartCoroutine(SpawnLoop());

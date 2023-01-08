@@ -19,6 +19,7 @@ public class FarmerScript : MonoBehaviour
     [SerializeField] private Sprite[] allHatsHit;
     [SerializeField] private int hatID;
     private GameManager gameManager;
+    private EnemySpawner enemySpawner;
     private Sprite hatSprite, hatSpriteHit;
     private float startHealth;
     private bool lostHat;
@@ -35,7 +36,8 @@ public class FarmerScript : MonoBehaviour
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        health += gameManager.difficultyLevel + Random.Range(-1f, 2f);
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+        health += 12 * gameManager.difficultyLevel + Random.Range(-1f, 4f);
         startHealth = health;
         transform.localScale = Vector3.zero;
         transform.DOScale(1, 0.26f);
@@ -74,41 +76,49 @@ public class FarmerScript : MonoBehaviour
 
     public IEnumerator TakeDamage(float damage)
     {
-        health -= damage;
-        hitParticles.Play();
-        if (health <= 0)
+        if(health > 0)
         {
-            StartCoroutine(Death());
-        }
-        if (health < (startHealth / 2))
-        {
+            health -= damage;
+            hitParticles.Play();
+            if (health <= 0)
+            {
+                float p = Random.Range(0f, 1f);
+                if(p > 0.9f - gameManager.difficultyLevel)
+                {
+                    enemySpawner.SpawnEnemy();
+                }
+                StartCoroutine(Death());
+            }
+            if (health < (startHealth / 2))
+            {
+                if (lostHat == false)
+                {
+                    GameObject h = Instantiate(deadObject, hat.transform.position, Quaternion.identity);
+                    h.GetComponent<Rigidbody2D>().AddForce(new Vector2(694.20f + Random.Range(-10, 50), 420.69f + Random.Range(-10, 50)));
+                    h.GetComponent<Rigidbody2D>().AddTorque(-500 + Random.Range(-50, 10));
+                    h.GetComponentInChildren<SpriteRenderer>().sprite = allHats[hatID];
+                    h.GetComponentInChildren<SpriteRenderer>().gameObject.transform.localPosition = new Vector3(0, 0, 0);
+                    Destroy(hat);
+                    lostHat = true;
+                }
+            }
+
             if (lostHat == false)
             {
-                GameObject h = Instantiate(deadObject, hat.transform.position, Quaternion.identity);
-                h.GetComponent<Rigidbody2D>().AddForce(new Vector2(694.20f + Random.Range(-10, 50), 420.69f + Random.Range(-10, 50)));
-                h.GetComponent<Rigidbody2D>().AddTorque(-500 + Random.Range(-50, 10));
-                h.GetComponentInChildren<SpriteRenderer>().sprite = allHats[hatID];
-                h.GetComponentInChildren<SpriteRenderer>().gameObject.transform.localPosition = new Vector3(0, 0, 0);
-                Destroy(hat);
-                lostHat = true;
+                hat.sprite = allHatsHit[hatID];
             }
-        }
+            farmerSprite.sprite = hitSprite;
+            int a = Random.Range(0, 2) * 2 - 1;
+            farmerSprite.transform.localEulerAngles = new Vector3(0, 0, 15 * a + Random.Range(0, 8) * a);
+            farmerSprite.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.1f);
 
-        if(lostHat == false)
-        {
-            hat.sprite = allHatsHit[hatID];
-        }
-        farmerSprite.sprite = hitSprite;
-        int a = Random.Range(0, 2) * 2 - 1;
-        farmerSprite.transform.localEulerAngles = new Vector3(0, 0, 15 * a + Random.Range(0, 8) * a);
-        farmerSprite.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.1f);
+            yield return new WaitForSeconds(0.2f);
 
-        yield return new WaitForSeconds(0.2f);
-
-        farmerSprite.sprite = normalSprite;
-        if (lostHat == false)
-        {
-            hat.sprite = allHats[hatID];
+            farmerSprite.sprite = normalSprite;
+            if (lostHat == false)
+            {
+                hat.sprite = allHats[hatID];
+            }
         }
     }
     public IEnumerator Death()
@@ -185,7 +195,6 @@ public class FarmerScript : MonoBehaviour
         attackTimer -= Time.deltaTime;
         if (Physics2D.Raycast(transform.position, Vector2.left, 6f, plantLayer))
         {
-            Debug.Log("hitting");
             state = State.Attacking;
             if (attackTimer <= 0)
             {
@@ -212,7 +221,6 @@ public class FarmerScript : MonoBehaviour
         farmerSprite.transform.DORotate(new Vector3(0, 0, 0), 0.15f);
         yield return new WaitForEndOfFrame();
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 6f, plantLayer);
-        Debug.Log(hit.collider);
         hit.collider.gameObject.GetComponent<PlantHealth>().TakeHit(attackDamage);
     }
 
