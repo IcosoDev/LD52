@@ -7,7 +7,7 @@ public class MovingPanel : MonoBehaviour/*, IPointerDownHandler, IBeginDragHandl
     [SerializeField] private LayerMask uiLayer;
     [SerializeField] private Sprite normalSprite, outlinedSprite;
     [SerializeField] private Image spriteImage;
-    public int id; //0 corn
+    public int id; //0 corn, //1 wheat, //2 cotton, //3 pea, //4 potato, //5 pumpkin
     private PlantPlacerManager placerManager;
 
     private void Start()

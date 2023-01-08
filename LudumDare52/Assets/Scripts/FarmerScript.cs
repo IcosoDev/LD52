@@ -156,7 +156,7 @@ public class FarmerScript : MonoBehaviour
     {
         state = State.Slowed;
         slowedFlowers.transform.DOScale(1, 0.2f);
-        Invoke("ReturnFromSlow", 1.3f);
+        Invoke("ReturnFromSlow", 2f);
     }
 
     private void ReturnFromSlow()

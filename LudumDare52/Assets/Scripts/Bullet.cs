@@ -9,7 +9,9 @@ public class Bullet : MonoBehaviour
     //[SerializeField] private GameObject hitParticle;
     [HideInInspector] public float dmg;
     [SerializeField] private bool pierce, slowFarmer;
+    [SerializeField] private bool pumpkinBullet;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private GameObject pumpkinSplat;
     private SpriteRenderer bulletSprite;
     void Start()
     {
@@ -17,6 +19,12 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         Destroy(gameObject, 5);
+
+        if(pumpkinBullet)
+        {
+            dmg = 2;
+            Invoke("Splat", 1.32f);
+        }
     }
 
     private void Update()
@@ -24,50 +32,62 @@ public class Bullet : MonoBehaviour
         bulletSprite.transform.localEulerAngles += new Vector3(0, 0, rotationSpeed);
     }
 
+    private void Splat()
+    {
+        Instantiate(pumpkinSplat, transform.position, transform.rotation);
+        Destroy(gameObject);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if(collision.gameObject.CompareTag("Farmer"))
-        //{
-        //    StartCoroutine(Death());
-        //}
-        if (collision.gameObject.CompareTag("Death"))
+        if(!pumpkinBullet)
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            StartCoroutine(collision.gameObject.GetComponent<FarmerScript>().TakeDamage(dmg));
-            if (!pierce)
+            //if(collision.gameObject.CompareTag("Farmer"))
+            //{
+            //    StartCoroutine(Death());
+            //}
+            if (collision.gameObject.CompareTag("Death"))
             {
-                StartCoroutine(Death());
+                Destroy(gameObject);
             }
-            if(slowFarmer)
+            else
             {
-                collision.gameObject.GetComponent<FarmerScript>().SlowDown();
+                StartCoroutine(collision.gameObject.GetComponent<FarmerScript>().TakeDamage(dmg));
+                if (!pierce)
+                {
+                    StartCoroutine(Death());
+                }
+                if (slowFarmer)
+                {
+                    collision.gameObject.GetComponent<FarmerScript>().SlowDown();
+                }
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if(collision.gameObject.CompareTag("Farmer"))
-        //{
-        //    StartCoroutine(Death());
-        //}
-        if (collision.gameObject.CompareTag("Death"))
+        if(!pumpkinBullet)
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            StartCoroutine(collision.gameObject.GetComponent<FarmerScript>().TakeDamage(dmg));
-            if (!pierce)
+            //if(collision.gameObject.CompareTag("Farmer"))
+            //{
+            //    StartCoroutine(Death());
+            //}
+            if (collision.gameObject.CompareTag("Death"))
             {
-                StartCoroutine(Death());
+                Destroy(gameObject);
             }
-            if (slowFarmer)
+            else
             {
-                collision.gameObject.GetComponent<FarmerScript>().SlowDown();
+                StartCoroutine(collision.gameObject.GetComponent<FarmerScript>().TakeDamage(dmg));
+                if (!pierce)
+                {
+                    StartCoroutine(Death());
+                }
+                if (slowFarmer)
+                {
+                    collision.gameObject.GetComponent<FarmerScript>().SlowDown();
+                }
             }
         }
     }
