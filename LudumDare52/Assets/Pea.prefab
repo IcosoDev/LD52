@@ -149,6 +149,7 @@ MonoBehaviour:
   shootForce: 50
   shootParitcles: {fileID: 5810423225439867652}
   pea: 1
+  pumpkin: 0
 --- !u!114 &3346895372166434651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,7 +961,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 10.61
+    angle: 54.1
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1

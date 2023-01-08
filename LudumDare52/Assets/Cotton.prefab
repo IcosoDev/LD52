@@ -255,7 +255,7 @@ MonoBehaviour:
   hitSprite: {fileID: 21300000, guid: 23b769f6b9d56b947841139d4203105f, type: 3}
   hitParticles: {fileID: 8592689290085732092}
   deadObject: {fileID: 5147010035249722685, guid: 43d12611e2dbc774bb6a9c4f163c5ad7, type: 3}
-  timeBetweenShots: 4
+  timeBetweenShots: 3.2
   shootPoint: {fileID: 7186351514545403044}
   bullet: {fileID: 9104314961932195368, guid: 1affdc90c81061a4f9b5748c5968fc09, type: 3}
   shootForce: 50

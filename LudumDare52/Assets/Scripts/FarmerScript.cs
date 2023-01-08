@@ -5,12 +5,23 @@ using UnityEngine;
 public class FarmerScript : MonoBehaviour
 {
     //HALLO YOU WONDERFUL HUMAN BEING I HOPE YOU HAVE A FANTASTICALLY GROOVY DAY!!! -icobo
+    //pls do not judge my messy spaghetti code thanku
     public SpriteRenderer farmerSprite;
     public float health;
     [SerializeField] private Sprite normalSprite, hitSprite;
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private GameObject deadObject;
     [SerializeField] private GameObject slowedFlowers;
+    [SerializeField] private Sprite[] hats, hatsHit;
+    [SerializeField] private Sprite[] weirdHats, weirdHatsHit;
+    [SerializeField] private SpriteRenderer hat;
+    [SerializeField] private Sprite[] allHats;
+    [SerializeField] private Sprite[] allHatsHit;
+    [SerializeField] private int hatID;
+    private GameManager gameManager;
+    private Sprite hatSprite, hatSpriteHit;
+    private float startHealth;
+    private bool lostHat;
 
     public enum State
     {
@@ -23,10 +34,42 @@ public class FarmerScript : MonoBehaviour
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+        health += gameManager.difficultyLevel + Random.Range(-1f, 2f);
+        startHealth = health;
         transform.localScale = Vector3.zero;
         transform.DOScale(1, 0.26f);
         attackTimer = timeBetweenAttacks;
         state = State.Moving;
+
+        int a = Random.Range(0, 100);
+        if(a > 90)
+        {
+            int i = Random.Range(0, weirdHats.Length);
+            hat.sprite = weirdHats[i];
+            hatID = i + 3;
+        }
+        else
+        {
+            int b = Random.Range(0, 100);
+            if(b < 80)
+            {
+                hat.sprite = hats[0];
+                hatID = 0;
+            }
+            else
+            {
+                int w = Random.Range(1, hats.Length);
+                hat.sprite = hats[w];
+                hatID = w;
+            }
+        }
+        if (a > 50)
+        {
+            hat.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        hatSprite = allHats[hatID];
+        hatSpriteHit = allHatsHit[hatID];
     }
 
     public IEnumerator TakeDamage(float damage)
@@ -37,7 +80,24 @@ public class FarmerScript : MonoBehaviour
         {
             StartCoroutine(Death());
         }
+        if (health < (startHealth / 2))
+        {
+            if (lostHat == false)
+            {
+                GameObject h = Instantiate(deadObject, hat.transform.position, Quaternion.identity);
+                h.GetComponent<Rigidbody2D>().AddForce(new Vector2(694.20f + Random.Range(-10, 50), 420.69f + Random.Range(-10, 50)));
+                h.GetComponent<Rigidbody2D>().AddTorque(-500 + Random.Range(-50, 10));
+                h.GetComponentInChildren<SpriteRenderer>().sprite = allHats[hatID];
+                h.GetComponentInChildren<SpriteRenderer>().gameObject.transform.localPosition = new Vector3(0, 0, 0);
+                Destroy(hat);
+                lostHat = true;
+            }
+        }
 
+        if(lostHat == false)
+        {
+            hat.sprite = allHatsHit[hatID];
+        }
         farmerSprite.sprite = hitSprite;
         int a = Random.Range(0, 2) * 2 - 1;
         farmerSprite.transform.localEulerAngles = new Vector3(0, 0, 15 * a + Random.Range(0, 8) * a);
@@ -46,12 +106,16 @@ public class FarmerScript : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         farmerSprite.sprite = normalSprite;
+        if (lostHat == false)
+        {
+            hat.sprite = allHats[hatID];
+        }
     }
     public IEnumerator Death()
     {
         GameObject d = Instantiate(deadObject, transform.position, Quaternion.identity);
-        d.GetComponent<Rigidbody2D>().AddForce(new Vector2(694.20f, 420.69f));
-        d.GetComponent<Rigidbody2D>().AddTorque(-500);
+        d.GetComponent<Rigidbody2D>().AddForce(new Vector2(694.20f + Random.Range(-10, 50), 420.69f + Random.Range(-10, 50)));
+        d.GetComponent<Rigidbody2D>().AddTorque(-500 + Random.Range(-50, 10));
         d.GetComponentInChildren<SpriteRenderer>().sprite = normalSprite;
         transform.position = new Vector3(0, 0, -100);
 
@@ -104,11 +168,11 @@ public class FarmerScript : MonoBehaviour
         }
     }
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, Vector2.left * 6);
-    }
+    //public void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawRay(transform.position, Vector2.left * 6);
+    //}
 
     [Header("Attacking")]
     [SerializeField] private float timeBetweenAttacks;

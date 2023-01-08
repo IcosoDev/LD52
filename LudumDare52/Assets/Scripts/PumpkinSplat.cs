@@ -16,6 +16,7 @@ public class PumpkinSplat : MonoBehaviour
         pumpkinSplatSprite.transform.DOScale(1.15f, 0.08f);
         pumpkinSplatSprite.transform.DORotate(new Vector3(0, 0, 120), 2f);
         yield return new WaitForSeconds(0.4f);
+        GetComponent<BoxCollider2D>().enabled = false;
         pumpkinSplatSprite.transform.DOScale(0, 0.4f);
         yield return new WaitForSeconds(0.4f);
         Destroy(gameObject);
