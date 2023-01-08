@@ -10,11 +10,13 @@ public class FarmerScript : MonoBehaviour
     [SerializeField] private Sprite normalSprite, hitSprite;
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private GameObject deadObject;
+    [SerializeField] private GameObject slowedFlowers;
 
     public enum State
     {
         Moving,
-        Attacking
+        Attacking,
+        Slowed
     }
 
     public State state;
@@ -133,7 +135,10 @@ public class FarmerScript : MonoBehaviour
         }
         else
         {
-            state = State.Moving;
+            if(state != State.Slowed)
+            {
+                state = State.Moving;
+            }
         }
     }
 
@@ -145,5 +150,18 @@ public class FarmerScript : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 6f, plantLayer);
         Debug.Log(hit.collider);
         hit.collider.gameObject.GetComponent<PlantHealth>().TakeHit(attackDamage);
+    }
+
+    public void SlowDown()
+    {
+        state = State.Slowed;
+        slowedFlowers.transform.DOScale(1, 0.2f);
+        Invoke("ReturnFromSlow", 1.3f);
+    }
+
+    private void ReturnFromSlow()
+    {
+        state = State.Moving;
+        slowedFlowers.transform.DOScale(0, 0.2f);
     }
 }

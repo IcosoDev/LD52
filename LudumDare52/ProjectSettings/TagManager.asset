@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Farmer
+  - Death
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Plants
   - MovingPanels
   - PlayerBullet
-  - 
+  - Death
   - 
   - 
   - 
