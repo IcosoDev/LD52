@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("FarmersKilled", 0);
         enemySpawner = FindObjectOfType<EnemySpawner>();
         Invoke("StartStuffLmao", 2);
     }
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator SpawnLoop()
     {
-        float b = 0.75f * difficultyLevel - 1.6f;
+        float b = 0.12f * difficultyLevel - 1.6f;
         float a = Mathf.Pow(2, -b);
         timeBetweenSpawns = a + 1;
         SpawnFarmer();

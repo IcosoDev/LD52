@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Farmer
   - Death
+  - FarmersWin
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - PlayerBullet
   - Death
   - PumpkinBulllet
-  - 
+  - FarmersWin
   - 
   - 
   - 

@@ -24,4 +24,9 @@ public class ButtonAnimations : MonoBehaviour
     {
         menuManager.TransitionOut(name);
     }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }

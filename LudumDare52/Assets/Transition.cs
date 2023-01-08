@@ -18,8 +18,8 @@ public class Transition : MonoBehaviour
     public IEnumerator Transit(string name)
     {
         sprite.color = new Color32(0, 0, 0, 0);
-        sprite.DOFade(1, 0.12f);
-        yield return new WaitForSeconds(0.14f);
+        sprite.DOFade(1, 0.14f);
+        yield return new WaitForSeconds(0.19f);
         DoItLol(name);
     }
     private IEnumerator FadeIn()

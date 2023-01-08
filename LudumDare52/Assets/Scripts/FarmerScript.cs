@@ -37,7 +37,7 @@ public class FarmerScript : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        health += 12 * gameManager.difficultyLevel + Random.Range(-1f, 4f);
+        health += 17 * gameManager.difficultyLevel + Random.Range(-1f, 4f);
         startHealth = health;
         transform.localScale = Vector3.zero;
         transform.DOScale(1, 0.26f);
@@ -123,6 +123,7 @@ public class FarmerScript : MonoBehaviour
     }
     public IEnumerator Death()
     {
+        PlayerPrefs.SetInt("FarmersKilled", PlayerPrefs.GetInt("FarmersKilled") + 1);
         GameObject d = Instantiate(deadObject, transform.position, Quaternion.identity);
         d.GetComponent<Rigidbody2D>().AddForce(new Vector2(694.20f + Random.Range(-10, 50), 420.69f + Random.Range(-10, 50)));
         d.GetComponent<Rigidbody2D>().AddTorque(-500 + Random.Range(-50, 10));

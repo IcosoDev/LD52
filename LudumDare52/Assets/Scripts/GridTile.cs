@@ -56,11 +56,11 @@ public class GridTile : MonoBehaviour
     {
         if (Physics2D.OverlapCircle(transform.position, 1, plantLayer))
         {
-            available = true;
             return true;
         }
         else
         {
+            available = true;
             return false;
         }
     }
