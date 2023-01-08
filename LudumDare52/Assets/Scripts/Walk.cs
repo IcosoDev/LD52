@@ -16,7 +16,7 @@ public class Walk : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         farmerScript = GetComponent<FarmerScript>();
         gameManager = FindObjectOfType<GameManager>();
-        timeBetweenSteps -= gameManager.difficultyLevel / 10;
+        timeBetweenSteps -= Mathf.Log10(10 * gameManager.difficultyLevel) / 4.5f;
         stepTimer = timeBetweenSteps;
     }
 

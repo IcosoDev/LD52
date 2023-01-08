@@ -76,6 +76,7 @@ public class GridTile : MonoBehaviour
         {
             if (placerManager.isAPlantSelected == true && available == true)
             {
+                placerManager.PopSFX();
                 Instantiate(placerManager.plant[placerManager.IDOfSelectedPlant], transform.position, Quaternion.identity);
                 RemoveDisplay();
                 placerManager.isAPlantSelected = false;

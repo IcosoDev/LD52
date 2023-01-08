@@ -592,7 +592,11 @@ MonoBehaviour:
   farmer: {fileID: 1289008365}
   timeBeforeStart: 0.3
   transition: {fileID: 5063473249006831814, guid: fe00f0f1439efca4ea1e88ab3150b174, type: 3}
+  epic: {fileID: 0}
+  farmersKilled: {fileID: 0}
   main: 0
+  start: 0
+  lose: 0
 --- !u!4 &954248857
 Transform:
   m_ObjectHideFlags: 0
@@ -670,7 +674,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0, g: 0, b: 0, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}

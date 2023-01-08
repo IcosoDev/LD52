@@ -27,6 +27,7 @@ public class PlantShooter : Plant
 
     private void Shoot()
     {
+        gameManager.PopSFX();
         if(!pumpkin)
         {
             shootParitcles.Play();

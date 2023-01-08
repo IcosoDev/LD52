@@ -61,11 +61,14 @@ MonoBehaviour:
   hitSprite: {fileID: 21300000, guid: 29b188bb3a40abd4f979044446e7b0a9, type: 3}
   hitParticles: {fileID: 4993223419803988064}
   deadObject: {fileID: 5147010035249722685, guid: 43d12611e2dbc774bb6a9c4f163c5ad7, type: 3}
+  gameManager: {fileID: 0}
   timeBetweenShots: 1
   shootPoint: {fileID: 5894983197617244728}
   bullet: {fileID: 9104314961932195368, guid: 3d26507f7fa4c2248abe287f1f285a0c, type: 3}
   shootForce: 50
   shootParitcles: {fileID: 5894983198543020927}
+  pea: 0
+  pumpkin: 0
 --- !u!114 &-5827828046984814816
 MonoBehaviour:
   m_ObjectHideFlags: 0

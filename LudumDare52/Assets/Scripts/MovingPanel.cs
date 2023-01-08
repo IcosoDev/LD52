@@ -27,6 +27,7 @@ public class MovingPanel : MonoBehaviour/*, IPointerDownHandler, IBeginDragHandl
     {
         if(!placerManager.isAPlantSelected)
         {
+            placerManager.PopSFX();
             spriteImage.sprite = outlinedSprite;
             spriteImage.transform.DOScale(1.08f, 0.14f);
         }

@@ -11,6 +11,7 @@ public class Plant : MonoBehaviour
     [SerializeField] private Sprite normalSprite, hitSprite;
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private GameObject deadObject;
+    [HideInInspector] public GameManager gameManager;
 
     public bool canSeeFarmer()
     {
@@ -26,6 +27,7 @@ public class Plant : MonoBehaviour
 
     public void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         transform.localScale = Vector3.zero;
         transform.DOScale(1, 0.26f);
     }

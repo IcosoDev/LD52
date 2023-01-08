@@ -37,11 +37,12 @@ public class FarmerScript : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        health += 17 * gameManager.difficultyLevel + Random.Range(-1f, 4f);
+        health += 27 * gameManager.difficultyLevel + Random.Range(-1f, 4f);
         startHealth = health;
         transform.localScale = Vector3.zero;
         transform.DOScale(1, 0.26f);
         attackTimer = timeBetweenAttacks;
+        attackDamage += gameManager.difficultyLevel * 4;
         state = State.Moving;
 
         int a = Random.Range(0, 100);
@@ -78,6 +79,7 @@ public class FarmerScript : MonoBehaviour
     {
         if(health > 0)
         {
+            gameManager.HitSFX();
             health -= damage;
             hitParticles.Play();
             if (health <= 0)
